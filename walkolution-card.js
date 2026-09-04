@@ -5,12 +5,13 @@
  */
 
 console.info(
-  "%c WALKOULTION-CARD ",
+  "%c WALKOLUTION-CARD ",
   "color: white; background: #2e7d32; font-weight: bold; padding: 2px 6px; border-radius: 4px;",
 );
 
 const DEFAULT_CONFIG = {
   title: "",
+  title_spacing: "8px",
   text_align: "center",
   card_font_size: "30px",
   row_spacing: "12px",
@@ -140,6 +141,11 @@ class WalkolutionCard extends HTMLElement {
     });
   }
 
+  _normalizeSpacing(val, defaultVal = "8px") {
+    if (val === undefined || val === null || val === "") return defaultVal;
+    return typeof val === "number" ? `${val}px` : String(val).trim();
+  }
+
   _updateContent() {
     if (!this.shadowRoot) return;
 
@@ -182,7 +188,7 @@ class WalkolutionCard extends HTMLElement {
         label: config.session_steps_label ?? "👣 Session Steps:",
         val: stepsVal,
         unit: config.session_steps_unit ? ` ${config.session_steps_unit}` : "",
-        fontSize: config.session_steps_font_size || "20x",
+        fontSize: config.session_steps_font_size || "20px",
         boldLabel: config.session_steps_bold_label || config.bold_labels,
         boldValue: config.session_steps_bold_value || config.bold_values,
       });
@@ -202,8 +208,10 @@ class WalkolutionCard extends HTMLElement {
       });
     }
 
+    const titleSpacing = this._normalizeSpacing(config.title_spacing, "8px");
+
     const titleHtml = config.title
-      ? `<div class="card-header">${this._escapeHtml(config.title)}</div>`
+      ? `<div class="card-title card-header">${this._escapeHtml(config.title)}</div>`
       : "";
 
     const rowsHtml = rows
@@ -231,10 +239,13 @@ class WalkolutionCard extends HTMLElement {
           flex-direction: column;
           justify-content: center;
         }
+        .card-title,
         .card-header {
           font-size: 1.2em;
           font-weight: 500;
-          padding-bottom: 8px;
+          margin: 0 !important;
+          padding: 0 0 ${titleSpacing} 0 !important;
+          line-height: 1.2;
           text-align: ${config.text_align || "center"};
           color: var(--primary-text-color);
         }
@@ -316,9 +327,20 @@ class WalkolutionCardEditor extends HTMLElement {
   _getSchema() {
     return [
       {
-        name: "title",
-        label: "Card Title (Optional)",
-        selector: { text: {} },
+        type: "grid",
+        name: "",
+        schema: [
+          {
+            name: "title",
+            label: "Card Title (Optional)",
+            selector: { text: {} },
+          },
+          {
+            name: "title_spacing",
+            label: "Title Spacing (e.g. 8px)",
+            selector: { text: {} },
+          },
+        ],
       },
       {
         type: "grid",

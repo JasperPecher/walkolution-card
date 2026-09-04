@@ -99,6 +99,7 @@ total_distance_entity: sensor.walkolution_total
 ```yaml
 type: custom:walkolution-card
 title: "🏃 Walkolution Stats"
+title_spacing: "8px"
 text_align: center
 bold_labels: false
 bold_values: true
@@ -148,6 +149,7 @@ total_distance_font_size: "18px"
 | :---------------------------- | :-------- | :------------------------------- | :------------------------------------------------------------- |
 | `type`                        | `string`  | **Required**                     | `custom:walkolution-card`                                      |
 | `title`                       | `string`  | _Optional_                       | Optional title displayed at the top of the card                |
+| `title_spacing`               | `string`  | `8px`                            | Vertical spacing between title and stats rows                  |
 | `text_align`                  | `string`  | `center`                         | Text alignment (`center`, `left`, `right`)                     |
 | `card_font_size`              | `string`  | `30px`                           | Base font size for the card container                          |
 | `row_spacing`                 | `string`  | `12px`                           | Vertical spacing between stat rows                             |
@@ -160,7 +162,7 @@ total_distance_font_size: "18px"
 | `session_distance_unit`       | `string`  | `km`                             | Unit string displayed after the value                          |
 | `session_distance_divisor`    | `number`  | `1000`                           | Divisor applied to the raw entity state (e.g. 1000 for m → km) |
 | `session_distance_decimals`   | `number`  | `2`                              | Number of decimal places to display                            |
-| `session_distance_font_size`  | `string`  | `24px`                           | Font size for this row                                         |
+| `session_distance_font_size`  | `string`  | `20px`                           | Font size for this row                                         |
 | `session_distance_bold_label` | `boolean` | `false`                          | Make this row's label bold (overrides `bold_labels`)           |
 | `session_distance_bold_value` | `boolean` | `false`                          | Make this row's value bold (overrides `bold_values`)           |
 | **Session Steps**             |           |                                  |                                                                |
@@ -169,7 +171,7 @@ total_distance_font_size: "18px"
 | `session_steps_unit`          | `string`  | `""`                             | Unit string displayed after steps (blank by default)           |
 | `session_steps_divisor`       | `number`  | `1`                              | Divisor applied to raw steps count                             |
 | `session_steps_decimals`      | `number`  | `0`                              | Decimal places for steps                                       |
-| `session_steps_font_size`     | `string`  | `30px`                           | Font size for this row                                         |
+| `session_steps_font_size`     | `string`  | `20px`                           | Font size for this row                                         |
 | `session_steps_bold_label`    | `boolean` | `false`                          | Make steps label bold                                          |
 | `session_steps_bold_value`    | `boolean` | `false`                          | Make steps value bold                                          |
 | **Total Distance**            |           |                                  |                                                                |
@@ -178,7 +180,7 @@ total_distance_font_size: "18px"
 | `total_distance_unit`         | `string`  | `km`                             | Unit string displayed after total distance                     |
 | `total_distance_divisor`      | `number`  | `1000`                           | Divisor applied to raw total (e.g. 1000 for m → km)            |
 | `total_distance_decimals`     | `number`  | `2`                              | Decimal places for total distance                              |
-| `total_distance_font_size`    | `string`  | `22px`                           | Font size for this row                                         |
+| `total_distance_font_size`    | `string`  | `20px`                           | Font size for this row                                         |
 | `total_distance_bold_label`   | `boolean` | `false`                          | Make total distance label bold                                 |
 | `total_distance_bold_value`   | `boolean` | `false`                          | Make total distance value bold                                 |
 
