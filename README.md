@@ -6,7 +6,7 @@ Designed specifically to eliminate styling and loading issues on **Google Home /
 
 ---
 
-## 🚀 Installation Guide
+## Installation Guide
 
 > [!IMPORTANT]
 > In Home Assistant, manually added files in the `/config/www/` directory must be registered under **Dashboards → Resources**, **NOT** under HACS _Repositories_.
