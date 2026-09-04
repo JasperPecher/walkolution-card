@@ -170,7 +170,7 @@ class WalkolutionCard extends HTMLElement {
         unit: config.session_distance_unit
           ? ` ${config.session_distance_unit}`
           : "",
-        fontSize: config.session_distance_font_size || "24px",
+        fontSize: config.session_distance_font_size || "20px",
         boldLabel: config.session_distance_bold_label || config.bold_labels,
         boldValue: config.session_distance_bold_value || config.bold_values,
       });
@@ -182,7 +182,7 @@ class WalkolutionCard extends HTMLElement {
         label: config.session_steps_label ?? "👣 Session Steps:",
         val: stepsVal,
         unit: config.session_steps_unit ? ` ${config.session_steps_unit}` : "",
-        fontSize: config.session_steps_font_size || "30px",
+        fontSize: config.session_steps_font_size || "20x",
         boldLabel: config.session_steps_bold_label || config.bold_labels,
         boldValue: config.session_steps_bold_value || config.bold_values,
       });
@@ -196,7 +196,7 @@ class WalkolutionCard extends HTMLElement {
         unit: config.total_distance_unit
           ? ` ${config.total_distance_unit}`
           : "",
-        fontSize: config.total_distance_font_size || "22px",
+        fontSize: config.total_distance_font_size || "20px",
         boldLabel: config.total_distance_bold_label ?? config.bold_labels,
         boldValue: config.total_distance_bold_value ?? config.bold_values,
       });
@@ -384,7 +384,7 @@ class WalkolutionCardEditor extends HTMLElement {
           },
           {
             name: "session_distance_font_size",
-            label: "Font Size (e.g. 24px)",
+            label: "Font Size (e.g. 20px)",
             selector: { text: {} },
           },
           {
@@ -444,7 +444,7 @@ class WalkolutionCardEditor extends HTMLElement {
           },
           {
             name: "session_steps_font_size",
-            label: "Font Size (e.g. 30px)",
+            label: "Font Size (e.g. 20px)",
             selector: { text: {} },
           },
           {
@@ -504,7 +504,7 @@ class WalkolutionCardEditor extends HTMLElement {
           },
           {
             name: "total_distance_font_size",
-            label: "Font Size (e.g. 22px)",
+            label: "Font Size (e.g. 20px)",
             selector: { text: {} },
           },
           {
