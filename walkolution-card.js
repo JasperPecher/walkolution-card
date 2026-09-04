@@ -4,12 +4,9 @@
  * No external dependencies. Pure vanilla custom element with Shadow DOM.
  */
 
-const CARD_VERSION = '1.0.0';
-
 console.info(
-  `%c WALKOULTION-CARD %c v${CARD_VERSION} `,
-  'color: white; background: #2e7d32; font-weight: bold; padding: 2px 6px; border-radius: 4px;',
-  'color: #2e7d32; background: white; font-weight: bold; padding: 2px 6px;'
+  '%c WALKOULTION-CARD ',
+  'color: white; background: #2e7d32; font-weight: bold; padding: 2px 6px; border-radius: 4px;'
 );
 
 const DEFAULT_CONFIG = {
@@ -289,18 +286,26 @@ class WalkolutionCardEditor extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this._config = {};
     this._hass = null;
+    this._form = null;
+  }
+
+  connectedCallback() {
+    this._render();
   }
 
   setConfig(config) {
     this._config = { ...DEFAULT_CONFIG, ...config };
-    this._render();
+    if (!this._form) {
+      this._render();
+    } else {
+      this._form.data = this._config;
+    }
   }
 
   set hass(hass) {
     this._hass = hass;
-    const form = this.shadowRoot ? this.shadowRoot.querySelector('ha-form') : null;
-    if (form) {
-      form.hass = hass;
+    if (this._form) {
+      this._form.hass = hass;
     }
   }
 
@@ -543,36 +548,46 @@ class WalkolutionCardEditor extends HTMLElement {
   _render() {
     if (!this.shadowRoot) return;
 
-    this.shadowRoot.innerHTML = `
-      <div class="card-config">
-        <ha-form></ha-form>
-      </div>
-      <style>
-        .card-config {
-          display: block;
-          padding: 8px 0;
-        }
-      </style>
-    `;
+    if (!this._form) {
+      this.shadowRoot.innerHTML = `
+        <div class="card-config">
+          <ha-form></ha-form>
+        </div>
+        <style>
+          .card-config {
+            display: block;
+            padding: 8px 0;
+          }
+        </style>
+      `;
 
-    const form = this.shadowRoot.querySelector('ha-form');
-    if (form) {
-      form.hass = this._hass;
-      form.data = this._config;
-      form.schema = this._getSchema();
-      form.computeLabel = (s) => s.label || s.name;
-      form.addEventListener('value-changed', (e) => {
-        this._valueChanged(e);
-      });
+      this._form = this.shadowRoot.querySelector('ha-form');
+      if (this._form) {
+        this._form.schema = this._getSchema();
+        this._form.computeLabel = (s) => s.label || s.name;
+        this._form.addEventListener('value-changed', (e) => {
+          this._valueChanged(e);
+        });
+      }
+    }
+
+    if (this._form) {
+      if (this._hass) {
+        this._form.hass = this._hass;
+      }
+      this._form.data = this._config;
     }
   }
 
   _valueChanged(ev) {
-    if (!this._config || !this._hass) return;
+    ev.stopPropagation();
+    if (!this._config) return;
     const newConfig = {
       ...this._config,
       ...ev.detail.value,
     };
+
+    this._config = newConfig;
 
     const event = new CustomEvent('config-changed', {
       detail: { config: newConfig },

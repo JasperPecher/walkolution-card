@@ -39,7 +39,7 @@ If you do not see the "Resources" tab in Home Assistant, you need to enable Adva
 3. Select **Resources**.
 4. Click the **+ Add Resource** button in the bottom-right corner.
 5. Enter the following details:
-   - **URL**: `/local/walkolution-card.js?v=1.0.0` _(the `?v=1.0.0` prevents browser cache issues)_
+   - **URL**: `/local/walkolution-card.js`
    - **Resource Type**: `JavaScript Module`
 6. Click **Create**.
 
@@ -188,5 +188,5 @@ total_distance_font_size: "18px"
 
 When casting Home Assistant dashboards to Google Cast devices:
 
-- Google Cast caches dashboard resources aggressively. Whenever you update `walkolution-card.js`, increment the version in the resource URL (e.g. `/local/walkolution-card.js?v=1.0.1`) or reboot your Cast display if changes don't appear immediately.
+- If you make changes to `walkolution-card.js` in `/config/www/`, reboot your Cast display or recasting the dashboard will load the latest file.
 - Because this card encapsulates styles entirely within Shadow DOM without external CSS injection, font sizes and alignments will render identically on your phone, desktop, and Nest Hub display.
