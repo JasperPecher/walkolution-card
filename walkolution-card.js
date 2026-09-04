@@ -4,9 +4,12 @@
  * No external dependencies. Pure vanilla custom element with Shadow DOM.
  */
 
+const CARD_VERSION = "1.2.0";
+
 console.info(
-  "%c WALKOLUTION-CARD ",
-  "color: white; background: #2e7d32; font-weight: bold; padding: 2px 6px; border-radius: 4px;",
+  `%c WALKOLUTION-CARD %c v${CARD_VERSION} `,
+  "color: white; background: #2e7d32; font-weight: bold; padding: 2px 6px; border-radius: 4px 0 0 4px;",
+  "color: #2e7d32; background: #c8e6c9; font-weight: bold; padding: 2px 6px; border-radius: 0 4px 4px 0;",
 );
 
 const DEFAULT_CONFIG = {
@@ -641,5 +644,6 @@ if (!window.customCards.some((card) => card.type === "walkolution-card")) {
     description:
       "Walkolution treadmill stats with visual editor, custom font sizes, and Google Home/Nest Hub compatibility.",
     preview: true,
+    version: CARD_VERSION,
   });
 }

@@ -23,23 +23,14 @@ _(Note: Home Assistant maps `/config/www/` internally to the web URL `/local/`)_
 
 ---
 
-### Step 2: Enable "Advanced Mode" in Home Assistant
-
-If you do not see the "Resources" tab in Home Assistant, you need to enable Advanced Mode:
-
-1. In Home Assistant, click on your **User Profile** (your username / avatar in the bottom-left corner of the sidebar).
-2. Scroll down and toggle **Advanced Mode** to **ON**.
-
----
-
-### Step 3: Add the Resource
+### Step 2: Add the Resource
 
 1. Navigate to **Settings** → **Dashboards**.
 2. Click the **three vertical dots `⋮`** in the top-right corner.
 3. Select **Resources**.
 4. Click the **+ Add Resource** button in the bottom-right corner.
 5. Enter the following details:
-   - **URL**: `/local/walkolution-card.js`
+   - **URL**: `/local/walkolution-card.js?v=1.2.0`
    - **Resource Type**: `JavaScript Module`
 6. Click **Create**.
 
