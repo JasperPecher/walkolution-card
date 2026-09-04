@@ -2,61 +2,75 @@
 
 A lightweight, reliable custom Lovelace card for Home Assistant to display your **Walkolution** manual treadmill statistics (Today's Session Distance, Session Steps, and Total Distance).
 
-Designed specifically to solve styling and loading issues on **Google Home / Nest Hub Cast displays** where `custom:mod-card` or shadow-DOM CSS injections often fail or render inconsistently.
+Designed specifically to eliminate styling and loading issues on **Google Home / Nest Hub Cast displays** where `custom:mod-card` or shadow-DOM CSS injections often fail or render inconsistently.
 
 ---
 
-## ✨ Features
+## 🚀 Installation Guide
 
-- 📺 **100% Google Home & Nest Hub Compatible**: Built with native Vanilla Web Components (`HTMLElement` + Shadow DOM) without external library dependencies or CSS hacks. Renders reliably on Google Cast.
-- 🎨 **Visual UI Editor**: Fully configurable directly from the Home Assistant dashboard editor (`ha-form`), no manual YAML editing required.
-- 🔤 **Complete Typography Control**:
-  - Customize font sizes for each individual metric (e.g., `24px`, `30px`, `22px`, `1.5rem`).
-  - Adjust the card's base font size.
-  - Toggle **Bold/Strong** text for labels, values, or both.
-- 🔢 **Unit & Number Formatting**:
-  - Custom divisors (e.g., `1000` to convert meters to kilometers).
-  - Decimal precision setting for each row (e.g. `2` decimals for distance, `0` for steps).
-  - Custom units (`km`, `steps`, `mi`, etc.).
-- ↔️ **Alignment & Layout**: Center, left, or right alignment with customizable row spacing and padding.
-- ⚡ **Lightweight & Fast**: Zero bundle dependencies, minimal memory footprint.
+> [!IMPORTANT]
+> In Home Assistant, manually added files in the `/config/www/` directory must be registered under **Dashboards → Resources**, **NOT** under HACS _Repositories_.
 
----
+### Step 1: Copy file to `/config/www/`
 
-## 🚀 Installation
+Place [`walkolution-card.js`](walkolution-card.js) inside your Home Assistant `www` folder:
 
-1. Download [`walkolution-card.js`](walkolution-card.js) from this repository.
-2. Copy `walkolution-card.js` to your Home Assistant configuration directory under:
-   ```text
-   /config/www/walkolution-card.js
-   ```
-3. In Home Assistant, go to **Settings** -> **Dashboards** -> click the three dots in the top right corner -> **Resources**.
-4. Click **Add Resource**:
-   - **URL**: `/local/walkolution-card.js`
-   - **Resource type**: `JavaScript Module`
-5. Refresh your browser cache.
+```text
+/config/www/walkolution-card.js
+```
+
+_(Note: Home Assistant maps `/config/www/` internally to the web URL `/local/`)_.
 
 ---
 
-## 🛠️ Usage & Configuration
+### Step 2: Enable "Advanced Mode" in Home Assistant
 
-### Visual Editor
+If you do not see the "Resources" tab in Home Assistant, you need to enable Advanced Mode:
 
-1. Open your Home Assistant dashboard and click **Edit Dashboard**.
-2. Click **Add Card** and search for **Walkolution Card**.
-3. Use the visual editor to:
-   - Select your sensor entities.
-   - Adjust font sizes (e.g. `24px`, `30px`, `22px`).
-   - Toggle **Bold Labels** and/or **Bold Values**.
-   - Change alignment, row spacing, units, and decimal places.
+1. In Home Assistant, click on your **User Profile** (your username / avatar in the bottom-left corner of the sidebar).
+2. Scroll down and toggle **Advanced Mode** to **ON**.
 
 ---
 
-### YAML Configuration Examples
+### Step 3: Add the Resource
 
-#### 1. Default (Replaces `mod-card` + `markdown`)
+1. Navigate to **Settings** → **Dashboards**.
+2. Click the **three vertical dots `⋮`** in the top-right corner.
+3. Select **Resources**.
+4. Click the **+ Add Resource** button in the bottom-right corner.
+5. Enter the following details:
+   - **URL**: `/local/walkolution-card.js?v=1.0.0` _(the `?v=1.0.0` prevents browser cache issues)_
+   - **Resource Type**: `JavaScript Module`
+6. Click **Create**.
 
-This matches the default layout and font sizes of your original markdown card:
+---
+
+### Step 4: Refresh Your Browser Cache
+
+Home Assistant and browsers cache dashboard resources aggressively:
+
+- **Chrome / Edge (Mac)**: Press `Cmd` + `Shift` + `R`
+- **Chrome / Edge (Windows)**: Press `Ctrl` + `F5`
+- **Home Assistant Companion App**: Settings → Companion App → Debugging → Refresh Frontend Cache
+
+---
+
+## 🛠️ Adding the Card to your Dashboard
+
+### Option A: From the Card Picker (Visual Editor)
+
+1. Open your dashboard and click **Edit Dashboard** (three dots top-right → Edit Dashboard).
+2. Click **+ Add Card**.
+3. Search for **Walkolution Card** in the card list.
+4. Use the visual editor to adjust entities, font sizes, bold text, divisors, and alignment!
+
+### Option B: Using the "Manual" Card
+
+If your browser hasn't refreshed the card picker list yet, you can add it directly:
+
+1. Click **+ Add Card** and scroll down to the very bottom.
+2. Select **Manual**.
+3. Paste the following YAML:
 
 ```yaml
 type: custom:walkolution-card
@@ -65,7 +79,22 @@ session_steps_entity: sensor.walkolution_today_steps
 total_distance_entity: sensor.walkolution_total
 ```
 
-#### 2. Customized Font Sizes with Bold Values
+4. Click **Save**. You can now edit it visually anytime by clicking **Edit Card**!
+
+---
+
+## Configuration Examples (YAML)
+
+### 1. Default (Matches your original setup)
+
+```yaml
+type: custom:walkolution-card
+session_distance_entity: sensor.walkolution_daily
+session_steps_entity: sensor.walkolution_today_steps
+total_distance_entity: sensor.walkolution_total
+```
+
+### 2. Custom Font Sizes with Bold Values
 
 ```yaml
 type: custom:walkolution-card
@@ -97,7 +126,7 @@ total_distance_decimals: 2
 total_distance_font_size: "24px"
 ```
 
-#### 3. Left-Aligned & Compact
+### 3. Left-Aligned & Compact
 
 ```yaml
 type: custom:walkolution-card
@@ -113,7 +142,7 @@ total_distance_font_size: "18px"
 
 ---
 
-## ⚙️ Configuration Options
+## Full Configuration Options
 
 | Option                        | Type      | Default                          | Description                                                    |
 | :---------------------------- | :-------- | :------------------------------- | :------------------------------------------------------------- |
@@ -155,15 +184,9 @@ total_distance_font_size: "18px"
 
 ---
 
-## 💡 Google Home / Nest Hub Tips
+## Google Home / Nest Hub Tips
 
 When casting Home Assistant dashboards to Google Cast devices:
 
-- Google Cast caches dashboard resources aggressively. After updating the file, increment the version in the resource URL (e.g. `/local/walkolution-card.js?v=1.0.1`) or reboot your Cast display if changes don't appear immediately.
+- Google Cast caches dashboard resources aggressively. Whenever you update `walkolution-card.js`, increment the version in the resource URL (e.g. `/local/walkolution-card.js?v=1.0.1`) or reboot your Cast display if changes don't appear immediately.
 - Because this card encapsulates styles entirely within Shadow DOM without external CSS injection, font sizes and alignments will render identically on your phone, desktop, and Nest Hub display.
-
----
-
-## 📄 License
-
-MIT

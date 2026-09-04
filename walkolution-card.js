@@ -65,7 +65,10 @@ class WalkolutionCard extends HTMLElement {
   }
 
   static getStubConfig() {
-    return { ...DEFAULT_CONFIG };
+    return {
+      type: 'custom:walkolution-card',
+      ...DEFAULT_CONFIG,
+    };
   }
 
   setConfig(config) {
@@ -90,6 +93,10 @@ class WalkolutionCard extends HTMLElement {
   }
 
   _hasStateChanged(oldHass, newHass) {
+    if (!oldHass || !newHass || !oldHass.states || !newHass.states) {
+      return true;
+    }
+
     const entities = [
       this._config.session_distance_entity,
       this._config.session_steps_entity,
@@ -108,7 +115,7 @@ class WalkolutionCard extends HTMLElement {
   }
 
   _formatValue(entityId, divisor, decimals) {
-    if (!this._hass || !entityId) return '—';
+    if (!this._hass || !this._hass.states || !entityId) return '—';
     const stateObj = this._hass.states[entityId];
     if (!stateObj) return '—';
 
@@ -586,11 +593,12 @@ if (!customElements.get('walkolution-card-editor')) {
 
 // Register card in Home Assistant custom card registry
 window.customCards = window.customCards || [];
-window.customCards.push({
-  type: 'walkolution-card',
-  name: 'Walkolution Card',
-  description:
-    'A clean, reliable card for Walkolution treadmill stats with visual editor, customizable typography, and Google Home/Nest Hub compatibility.',
-  preview: true,
-  documentationURL: 'https://github.com/jasperpecher/walkolution-card',
-});
+if (!window.customCards.some((card) => card.type === 'walkolution-card')) {
+  window.customCards.push({
+    type: 'walkolution-card',
+    name: 'Walkolution Card',
+    description:
+      'Walkolution treadmill stats with visual editor, custom font sizes, and Google Home/Nest Hub compatibility.',
+    preview: true,
+  });
+}
